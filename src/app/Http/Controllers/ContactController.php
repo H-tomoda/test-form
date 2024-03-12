@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Contact;
+use App\Http\Requests\ContactRequest;
 
 class ContactController extends Controller
 {
@@ -11,16 +12,18 @@ class ContactController extends Controller
     {
         return view('index');
     }
-    public function confirm(Request $request)
+    public function confirm(ContactRequest $request)
     {
+        var_dump('confirm');
         $contact = $request->only(['name', 'email', 'tel', 'content']);
-        // 以下compact関数利用　return view('confirm', ['contact' => $contact]);
-        return view('confirm', compact('contact'));
+        return view('confirm', ['contact' => $contact]);
+        //return view('confirm', compact('contact'));
     }
-    public function store(Request $request)
+    public function store(ContactRequest $request)
     {
+        var_dump('store');
         $contact = $request->only(['name', 'email', 'tel', 'content']);
-        Contact::create('$contact');
+        Contact::create($contact);
         return view('thanks');
     }
 }
